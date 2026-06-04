@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Projeto Mil"/>
+<meta name="theme-color" content="#08080f"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<title>Projeto R$1.000</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#08080f;color:#e8e0d0;font-family:"DM Sans",sans-serif;overflow-x:hidden}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+input{background:none;border:none;outline:none;color:inherit;font:inherit}
+button{cursor:pointer;border:none;font:inherit;-webkit-appearance:none}
+.app{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:70px}
+.gold{color:#d4a853}.green{color:#4ade80}.red{color:#f87171}.amber{color:#fbbf24}.sky{color:#38bdf8}.violet{color:#c084fc}
+.hdr{background:linear-gradient(180deg,#0f0f28 0%,#08080f 100%);padding:52px 18px 18px}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.hdr-title{font-family:"DM Serif Display",serif;font-size:24px;line-height:1.15}
+.hdr-acc{text-align:right}
+.hdr-acc-lbl{font-size:10px;color:#4a4a6a}
+.hdr-acc-val{font-size:28px;font-weight:800;color:#4ade80}
+.hdr-acc-pct{font-size:10px;color:#4a4a6a}
+.bar-track{width:100%;height:8px;background:#1c1c2e;border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#b8882a,#f59e0b);transition:width .8s}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.sb{background:#0e0e1c;border:1px solid #1c1c2e;border-radius:12px;padding:12px;text-align:center}
+.sv{font-size:20px;font-weight:700}.sl{font-size:10px;color:#4a4a6a;margin-top:3px}
+.sync{display:flex;align-items:center;gap:8px;padding:9px 16px;font-size:12px;border-bottom:1px solid #1c1c2e;background:#08080f;position:sticky;top:0;z-index:10}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.tabs{display:flex;gap:4px;padding:10px 14px;border-bottom:1px solid #1c1c2e;overflow-x:auto;scrollbar-width:none;background:#08080f;position:sticky;top:36px;z-index:9}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:7px 13px;border-radius:8px;font-size:13px;font-weight:500;background:none;color:#4a4a6a;white-space:nowrap;transition:all .2s}
+.tab.active{background:#1c1c2e;color:#e8e0d0}
+.page{padding:18px 18px 0;display:none}
+.page.active{display:block}
+.stit{font-size:11px;font-weight:600;color:#4a4a6a;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.fbox{background:#0b0b18;border:1px solid #1c1c2e;border-radius:12px;padding:13px;margin-bottom:10px;transition:border-color .2s}
+.fbox:focus-within{border-color:#b8882a}
+.flbl{font-size:11px;color:#4a4a6a;margin-bottom:5px;letter-spacing:.5px;text-transform:uppercase}
+.finp{font-size:24px;font-weight:700;width:100%;color:#e8e0d0}
+.fhint{font-size:11px;margin-top:8px;color:#4a4a6a;line-height:2}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.date-row{display:flex;align-items:center;gap:10px}
+.bdg{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px}
+.bdg-g{background:#221700;color:#d4a853}.bdg-b{background:#001520;color:#38bdf8}
+.preview{background:#11111e;border:1px solid #2a1f00;border-radius:13px;padding:13px;margin-bottom:14px}
+.preview-row{display:flex;justify-content:space-between;margin-bottom:6px}
+.sbtn{width:100%;padding:16px;border-radius:14px;font-size:15px;font-weight:700;background:linear-gradient(135deg,#c49a2e,#f59e0b);color:#08080f;transition:opacity .2s,transform .1s;margin-bottom:10px}
+.sbtn:active{transform:scale(.97)}.sbtn:disabled{opacity:.35}
+.sbtn-green{background:linear-gradient(135deg,#1a3a2a,#2a6a4a);color:#4ade80}
+.ibox{background:#0a0a16;border-radius:12px;padding:14px;font-size:12px;color:#4a4a6a;line-height:1.9;margin-top:14px}
+.ocard{background:#0d0d1a;border:1px solid #1c1c2e;border-radius:14px;padding:16px;margin-bottom:12px}
+.ocard-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.orow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #181828}
+.orow:last-child{border-bottom:none;padding-bottom:0}
+.otot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:10px 14px;background:#0f0f22;border-radius:10px}
+.hrow{background:#0b0b18;border:1px solid #1c1c2e;border-radius:12px;padding:13px;margin-bottom:8px}
+.hrow-line{font-size:11px;color:#5a5a7a;line-height:1.9;margin-top:3px}
+.dbtn{background:none;color:#2a2a4a;font-size:16px;padding:0 6px;transition:color .2s;flex-shrink:0}
+.dbtn:active{color:#f87171}
+.empty{text-align:center;padding:60px 0;color:#2a2a4a}
+.pill{display:inline-flex;font-size:11px;padding:3px 9px;border-radius:99px;margin:2px;font-weight:500}
+.pr{background:#1f0808;color:#f87171}.pa{background:#1f1200;color:#fbbf24}
+.ps{background:#001020;color:#38bdf8}.pg{background:#001508;color:#4ade80}.pv{background:#150020;color:#c084fc}
+.sum-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #1c1c2e}
+.proj-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #1a1a2a}
+.card{background:#11111e;border:1px solid #1c1c2e;border-radius:14px;padding:14px}
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#14142a;border:1px solid #2a2a4a;padding:12px 22px;border-radius:99px;font-size:13px;font-weight:600;z-index:999;white-space:nowrap;opacity:0;transition:opacity .3s;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+.splash{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px}
+.spinner{width:38px;height:38px;border:3px solid #1c1c2e;border-top-color:#d4a853;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err-box{background:#1a0808;border:1px solid #3a1010;border-radius:14px;padding:16px;font-size:12px;color:#f87171;line-height:1.8;max-width:320px;word-break:break-word;text-align:left}
+.retry-btn{padding:12px 28px;border-radius:12px;background:#1c1c2e;color:#e8e0d0;font-size:14px;font-weight:600;border:1px solid #2a2a4a;cursor:pointer;font-family:inherit}
+.sep{height:1px;background:#1c1c2e;margin:20px 0}
+</style>
+</head>
+<body>
+
+<div id="splash" class="splash">
+  <div class="spinner"></div>
+  <div id="splashMsg" style="color:#4a4a6a;font-size:14px">JS não rodou</div>
+</div>
+
+<div id="errScreen" class="splash" style="display:none">
+  <div style="font-size:36px">⚠️</div>
+  <div style="color:#f87171;font-size:16px;font-weight:700">Erro ao conectar</div>
+  <div id="errDetail" class="err-box"></div>
+  <button class="retry-btn" onclick="doLoad()">Tentar novamente</button>
+</div>
+
+<div id="mainApp" class="app" style="display:none">
+  <div class="hdr">
+    <div class="hdr-top">
+      <div>
+        <div class="hdr-title">Projeto<br/><span class="gold">R$ 1.000</span></div>
+        <div style="font-size:11px;color:#4a4a6a;margin-top:4px">12 mai → 12 ago 2026</div>
+      </div>
+      <div class="hdr-acc">
+        <div class="hdr-acc-lbl">acumulado</div>
+        <div class="hdr-acc-val" id="hdrAcc">R$ 0,00</div>
+        <div class="hdr-acc-pct" id="hdrPct">0.0% da meta</div>
+      </div>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+    <div class="sg">
+      <div class="sb"><div class="sv red" id="statRem">R$ 1.000,00</div><div class="sl">Restante</div></div>
+      <div class="sb"><div class="sv gold" id="statTarget">--</div><div class="sl">Meta/dia liq.</div></div>
+      <div class="sb"><div class="sv" id="statDays" style="color:#7070a0">--</div><div class="sl">Dias restantes</div></div>
+    </div>
+  </div>
+
+  <div class="sync">
+    <div class="dot" id="syncDot" style="background:#38bdf8;animation:blink .9s infinite"></div>
+    <span id="syncMsg" style="color:#38bdf8;flex:1">Carregando...</span>
+    <button id="syncRetry" onclick="doPersist(entries)" style="display:none;font-size:11px;color:#38bdf8;background:none;border:none;cursor:pointer;font-family:inherit">Tentar novamente</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('hoje')">📝 Registrar</button>
+    <button class="tab" onclick="showTab('obrigacoes')">🙏 Obrigações</button>
+    <button class="tab" onclick="showTab('historico')">📊 Histórico</button>
+    <button class="tab" onclick="showTab('resumo')">💡 Resumo</button>
+  </div>
+
+  <!-- REGISTRAR -->
+  <div id="tab-hoje" class="page active">
+    <div style="margin-bottom:14px">
+      <div class="stit">Data do registro</div>
+      <div class="fbox date-row">
+        <span style="font-size:17px">📅</span>
+        <input type="date" id="dateInput" style="font-size:14px;font-weight:500;flex:1"/>
+        <span id="herPayBadge" class="bdg bdg-g" style="display:none">💰 Pag. dela</span>
+        <span id="hisPayBadge" class="bdg bdg-b" style="display:none">💰 Pag. meu</span>
+      </div>
+    </div>
+    <div class="stit">Valores brutos de hoje</div>
+    <div class="two-col">
+      <div class="fbox">
+        <div class="flbl">🛒 Ela — Shop</div>
+        <input type="number" placeholder="0,00" id="herInput" class="finp" oninput="updatePreview()" inputmode="decimal"/>
+        <div id="herHint" class="fhint" style="display:none"></div>
+      </div>
+      <div class="fbox">
+        <div class="flbl">📱 Eu — TikTok/YT</div>
+        <input type="number" placeholder="0,00" id="hisInput" class="finp" oninput="updatePreview()" inputmode="decimal"/>
+        <div id="hisHint" class="fhint" style="display:none"></div>
+      </div>
+    </div>
+    <div id="preview" class="preview" style="display:none">
+      <div class="preview-row"><span style="font-size:13px;color:#4a4a6a">Total bruto</span><span id="prevGross" style="font-weight:600"></span></div>
+      <div class="preview-row"><span style="font-size:13px;color:#4a4a6a">→ Vai pro projeto</span><span id="prevNet" class="green" style="font-weight:800;font-size:18px"></span></div>
+      <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:#4a4a6a">vs meta do dia</span><span id="prevVsMeta" style="font-size:12px;font-weight:700"></span></div>
+    </div>
+    <button class="sbtn" id="saveBtn" onclick="handleSave()">Registrar dia ✓</button>
+    <div class="sep"></div>
+    <div class="stit">💸 Aporte manual</div>
+    <div class="fbox">
+      <div class="flbl">Valor investido por fora (sem descontos)</div>
+      <input type="number" placeholder="0,00" id="aporteInput" class="finp" inputmode="decimal"/>
+      <div style="font-size:11px;color:#4a4a6a;margin-top:6px">Ex: dinheiro guardado, transferência extra</div>
+    </div>
+    <button class="sbtn sbtn-green" onclick="handleAporte()">+ Registrar Aporte</button>
+    <div class="ibox" id="infoBox"></div>
+  </div>
+
+  <!-- OBRIGACOES -->
+  <div id="tab-obrigacoes" class="page">
+    <p style="font-size:12px;color:#4a4a6a;margin-bottom:16px;line-height:1.7">Dízimo + primícias sobre o bruto acumulado — a entregar no dia do pagamento.</p>
+    <div class="ocard" id="herOcard"></div>
+    <div class="ocard" id="hisOcard"></div>
+  </div>
+
+  <!-- HISTORICO -->
+  <div id="tab-historico" class="page">
+    <div id="histList"></div>
+  </div>
+
+  <!-- RESUMO -->
+  <div id="tab-resumo" class="page">
+    <div class="stit">Distribuição total</div>
+    <div id="sumList"></div>
+    <div style="margin-top:20px" class="stit">Taxas aplicadas</div>
+    <div class="card" style="margin-bottom:20px">
+      <div style="margin-bottom:10px;font-weight:700;font-size:13px">🛒 Ela — TikTok Shop</div>
+      <div><span class="pill pr">−10% dízimo</span><span class="pill pv">−÷30 primícias</span><span class="pill pa">−50% reinvest.</span><span class="pill pg">≈36,7% projeto</span></div>
+      <div style="margin-top:14px;margin-bottom:10px;font-weight:700;font-size:13px">📱 Eu — TikTok / YouTube</div>
+      <div><span class="pill pr">−10% dízimo</span><span class="pill pv">−÷30 primícias</span><span class="pill ps">−20% IA</span><span class="pill pg">≈66,7% projeto</span></div>
+    </div>
+    <div class="stit">Dias</div>
+    <div class="sg" id="daysSg" style="margin-top:0;margin-bottom:20px"></div>
+    <div id="projSection"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var FB = "https://do-zero-ao-1-mil-default-rtdb.firebaseio.com/projeto.json";
+var entries = [];
+function _del(idx){ 
+  var e=entries[idx]; 
+  if(e) handleDel(e.date, e.type||''); 
+}
+
+var P_START = new Date(2026,4,12);
+var P_END   = new Date(2026,7,12);
+var GOAL    = 1000;
+var TITHE   = 0.10;
+var PRIM    = 1/30;
+var HER_R   = 0.50;
+var HIS_AI  = 0.20;
+var HER_NET = 1 - TITHE - PRIM - HER_R;
+var HIS_NET = 1 - TITHE - PRIM - HIS_AI;
+
+function d0(d){ return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+function toDS(d){ return d.toISOString().split("T")[0]; }
+function fromDS(s){ var p=s.split("-"); return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2])); }
+function dBetween(a,b){ return Math.round((d0(b)-d0(a))/86400000); }
+function fmt(v){ return "R$ "+Math.abs(v).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function isHerPay(s){ return fromDS(s).getDay()===3; }
+function isHisPay(s){ return parseInt(s.split("-")[2])===15; }
+
+function lastWednesday(from){
+  var d=d0(from);
+  var day=d.getDay();
+  var diff=(day+4)%7;
+  d.setDate(d.getDate()-diff);
+  return d;
+}
+function lastFifteenth(from){
+  var d=d0(from);
+  if(d.getDate()>=15) return new Date(d.getFullYear(),d.getMonth(),15);
+  return new Date(d.getFullYear(),d.getMonth()-1,15);
+}
+
+// ── Firebase ──────────────────────────────────────
+function fbLoad(cb){
+  var done=false;
+  var timer=setTimeout(function(){
+    if(!done){ done=true; cb(new Error("Timeout 10s")); }
+  }, 10000);
+  try {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", FB, true);
+    xhr.onload = function(){
+      if(done) return; done=true; clearTimeout(timer);
+      try {
+        var d = JSON.parse(xhr.responseText);
+        var arr = (d && Array.isArray(d.entries)) ? d.entries : [];
+        cb(null, arr);
+      } catch(e){ cb(new Error("JSON: "+e.message)); }
+    };
+    xhr.onerror = function(){
+      if(done) return; done=true; clearTimeout(timer);
+      cb(new Error("Erro de rede"));
+    };
+    xhr.send();
+  } catch(e){ if(!done){ done=true; clearTimeout(timer); cb(e); } }
+}
+
+function fbSave(arr, cb){
+  try {
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", FB, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function(){ cb(null); };
+    xhr.onerror = function(){ cb(new Error("Erro ao salvar")); };
+    xhr.send(JSON.stringify({entries:arr}));
+  } catch(e){ cb(e); }
+}
+
+// ── Toast ─────────────────────────────────────────
+var toastTimer;
+function showToast(msg, type){
+  var t=document.getElementById("toast");
+  t.textContent=msg;
+  t.style.color=(type==="err")?"#f87171":"#4ade80";
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ t.classList.remove("show"); },(type==="err")?5000:2500);
+}
+
+function setSyncUI(state, msg){
+  var dot=document.getElementById("syncDot");
+  var sm=document.getElementById("syncMsg");
+  var sr=document.getElementById("syncRetry");
+  var colors={loading:"#38bdf8",ok:"#4ade80",saving:"#fbbf24",error:"#f87171"};
+  var c=colors[state];
+  dot.style.background=c;
+  dot.style.animation=(state==="loading"||state==="saving")?"blink .9s infinite":"none";
+  sm.style.color=c; sm.textContent=msg;
+  sr.style.display=(state==="error")?"block":"none";
+}
+
+function doLoad(){
+  document.getElementById("splash").style.display="flex";
+  document.getElementById("errScreen").style.display="none";
+  document.getElementById("mainApp").style.display="none";
+  fbLoad(function(err, data){
+    if(err){
+      document.getElementById("splash").style.display="none";
+      document.getElementById("errScreen").style.display="flex";
+      document.getElementById("errDetail").innerHTML="<b>Detalhe:</b><br/>"+err.message;
+      return;
+    }
+    entries=data;
+    document.getElementById("splash").style.display="none";
+    document.getElementById("mainApp").style.display="block";
+    setSyncUI("ok","Sincronizado ☁️ · "+entries.length+" registros");
+    renderAll();
+  });
+}
+
+function doPersist(arr){
+  setSyncUI("saving","Salvando...");
+  fbSave(arr, function(err){
+    if(err){
+      setSyncUI("error","Erro ao salvar");
+      showToast("Erro: "+err.message,"err");
+    } else {
+      setSyncUI("ok","Sincronizado ☁️ · "+arr.length+" registros");
+    }
+  });
+}
+
+// ── Save vendas (daily tracking only) ─────────────
+function handleSave(){
+  var sales=parseFloat(document.getElementById("herSalesInput").value)||0;
+  var recv=parseFloat(document.getElementById("herRecvInput").value)||0;
+  var mg=parseFloat(document.getElementById("hisInput").value)||0;
+  if(!sales && !recv && !mg){ showToast("Digite ao menos um valor","err"); return; }
+  var di=document.getElementById("dateInput").value;
+
+  var existing=entries.find(function(x){ return x.date===di && x.type!=="aporte"; });
+
+  // Merge: only update fields that were filled
+  var herSales = sales>0 ? sales : (existing ? existing.herSales||0 : 0);
+  var herRecv  = recv>0  ? recv  : (existing ? existing.herGross||0 : 0);
+  var hisG     = mg>0    ? mg    : (existing ? existing.hisGross||0 : 0);
+
+  var e={
+    date:di,
+    herSales:herSales,
+    herGross:herRecv,
+    herTithe:+(herRecv*TITHE).toFixed(2),
+    herPrimicias:+(herRecv*PRIM).toFixed(2),
+    herReinvest:+(herRecv*HER_R).toFixed(2),
+    herNet:+(herRecv*HER_NET).toFixed(2),
+    hisGross:hisG,
+    hisTithe:+(hisG*TITHE).toFixed(2),
+    hisPrimicias:+(hisG*PRIM).toFixed(2),
+    hisAI:+(hisG*HIS_AI).toFixed(2),
+    hisNet:+(hisG*HIS_NET).toFixed(2),
+    totalNet:+((herRecv*HER_NET)+(hisG*HIS_NET)).toFixed(2)
+  };
+
+  entries=entries.filter(function(x){ return !(x.date===di && x.type!=="aporte"); });
+  entries.push(e);
+  entries.sort(function(a,b){ return a.date.localeCompare(b.date); });
+
+  document.getElementById("herSalesInput").value="";
+  document.getElementById("herRecvInput").value="";
+  document.getElementById("hisInput").value="";
+  updatePreview();
+  showToast("Salvo! ☁️");
+  showTab("historico");
+  doPersist(entries);
+  renderAll();
+}
+
+// ── Aporte manual ─────────────────────────────────
+function handleAporte(){
+  var val=parseFloat(document.getElementById("aporteInput").value)||0;
+  if(!val){ showToast("Digite um valor","err"); return; }
+  var di=document.getElementById("dateInput").value;
+  var existing=entries.find(function(x){ return x.date===di && x.type==="aporte"; });
+  if(existing){
+    existing.aporteVal=+(existing.aporteVal+val).toFixed(2);
+    existing.totalNet=existing.aporteVal;
+  } else {
+    entries.push({
+      date:di, type:"aporte",
+      aporteVal:+val.toFixed(2), totalNet:+val.toFixed(2),
+      herSales:0,herGross:0,hisGross:0,herNet:0,hisNet:0,
+      herTithe:0,herPrimicias:0,herReinvest:0,
+      hisTithe:0,hisPrimicias:0,hisAI:0
+    });
+    entries.sort(function(a,b){ return a.date.localeCompare(b.date); });
+  }
+  document.getElementById("aporteInput").value="";
+  showToast("Aporte registrado! 💸");
+  doPersist(entries);
+  renderAll();
+}
+
+// ── Delete ────────────────────────────────────────
+function handleDel(date, type){
+  if(type==="aporte"){
+    entries=entries.filter(function(e){ return !(e.date===date && e.type==="aporte"); });
+  } else {
+    entries=entries.filter(function(e){ return !(e.date===date && e.type!=="aporte"); });
+  }
+  doPersist(entries);
+  showToast("Removido");
+  renderAll();
+}
+
+function showTab(id){
+  var pages=document.querySelectorAll(".page");
+  var tabs=document.querySelectorAll(".tab");
+  var ids=["hoje","obrigacoes","historico","resumo"];
+  for(var i=0;i<pages.length;i++){
+    pages[i].classList.remove("active");
+    tabs[i].classList.remove("active");
+  }
+  document.getElementById("tab-"+id).classList.add("active");
+  tabs[ids.indexOf(id)].classList.add("active");
+}
+
+function updatePreview(){
+  var ps=parseFloat(document.getElementById("herSalesInput").value)||0;
+  var pr=parseFloat(document.getElementById("herRecvInput").value)||0;
+  var pm=parseFloat(document.getElementById("hisInput").value)||0;
+  var today=d0(new Date());
+  var dR=Math.max(0,dBetween(today,d0(P_END))+1);
+  var acc=entries.reduce(function(s,e){ return s+e.totalNet; },0);
+  var rem=Math.max(0,GOAL-acc);
+  var dT=dR>0?rem/dR:0;
+  var dateVal=document.getElementById("dateInput").value;
+  document.getElementById("herPayBadge").style.display=isHerPay(dateVal)?"inline-block":"none";
+  document.getElementById("hisPayBadge").style.display=isHisPay(dateVal)?"inline-block":"none";
+
+  if(pr>0){
+    var rh=document.getElementById("herRecvHint");
+    rh.style.display="block";
+    rh.innerHTML="<div><span class='red'>-"+fmt(pr*TITHE)+"</span> dizimo</div><div><span class='violet'>-"+fmt(pr*PRIM)+"</span> primicias</div><div><span class='amber'>-"+fmt(pr*HER_R)+"</span> reinvest.</div><div><span class='green'>+"+fmt(pr*HER_NET)+"</span> projeto</div>";
+  } else { document.getElementById("herRecvHint").style.display="none"; }
+
+  if(pm>0){
+    var mh=document.getElementById("hisHint");
+    mh.style.display="block";
+    mh.innerHTML="<div><span class='red'>-"+fmt(pm*TITHE)+"</span> dizimo</div><div><span class='violet'>-"+fmt(pm*PRIM)+"</span> primicias</div><div><span class='sky'>-"+fmt(pm*HIS_AI)+"</span> IA</div><div><span class='green'>+"+fmt(pm*HIS_NET)+"</span> projeto</div>";
+  } else { document.getElementById("hisHint").style.display="none"; }
+
+  var pN=pr*HER_NET+pm*HIS_NET;
+  if(ps>0||pr>0||pm>0){
+    document.getElementById("preview").style.display="block";
+    document.getElementById("prevGross").textContent=fmt(ps+pr+pm);
+    document.getElementById("prevNet").textContent=fmt(pN);
+    var vs=document.getElementById("prevVsMeta");
+    if(pN>=dT){ vs.textContent="✅ +"+fmt(pN-dT)+" extra"; vs.className="green"; }
+    else if(pN>0){ vs.textContent="⚠️ faltam "+fmt(dT-pN); vs.className="red"; }
+    else { vs.textContent="📊 só acompanhamento"; vs.className=""; vs.style.color="#6a6a8a"; }
+  } else { document.getElementById("preview").style.display="none"; }
+}
+
+function renderAll(){
+  var today=d0(new Date());
+  var dE=Math.max(0,dBetween(d0(P_START),today));
+  var dR=Math.max(0,dBetween(today,d0(P_END))+1);
+  var acc=entries.reduce(function(s,e){ return s+e.totalNet; },0);
+  var rem=Math.max(0,GOAL-acc);
+  var dT=dR>0?rem/dR:0;
+  var prog=Math.min(100,(acc/GOAL)*100);
+
+  document.getElementById("hdrAcc").textContent=fmt(acc);
+  document.getElementById("hdrPct").textContent=prog.toFixed(1)+"% da meta";
+  document.getElementById("barFill").style.width=prog+"%";
+  document.getElementById("statRem").textContent=fmt(rem);
+  document.getElementById("statTarget").textContent=fmt(dT);
+  document.getElementById("statDays").textContent=dR+"d";
+  document.getElementById("infoBox").innerHTML=
+    "<div>📌 <b style='color:#7070a0'>Meta diária líquida:</b> "+fmt(dT)+"</div>"+
+    "<div>📌 <b style='color:#7070a0'>Bruto necessário (só ela receber):</b> "+fmt(dT/HER_NET)+"</div>"+
+    "<div>📌 <b style='color:#7070a0'>Bruto necessário (só eu):</b> "+fmt(dT/HIS_NET)+"</div>";
+
+  // Obrigações
+  var lWed=lastWednesday(today);
+  var l15=lastFifteenth(today);
+  var lWedStr=toDS(lWed);
+  var l15Str=toDS(l15);
+  var dToW=((3-today.getDay()+7)%7)||7;
+  var nWed=new Date(today); nWed.setDate(today.getDate()+dToW);
+  var n15=today.getDate()<15?new Date(today.getFullYear(),today.getMonth(),15):new Date(today.getFullYear(),today.getMonth()+1,15);
+
+  var herWRecv=0, herWNet=0, hisMG=0, hisMNet=0;
+  entries.forEach(function(e){
+    if(e.type==="aporte") return;
+    if(e.date>=lWedStr){ herWRecv+=e.herGross||0; herWNet+=e.herNet||0; }
+    if(e.date>=l15Str){ hisMG+=e.hisGross||0; hisMNet+=e.hisNet||0; }
+  });
+
+  function makeOcard(who, period, bdgClass, label, gross, netInvest){
+    var empty=gross===0?"<div style='font-size:12px;color:#3a3a5a;margin-top:10px;text-align:center'>Sem registros neste período</div>":"";
+    return "<div class='ocard-hdr'><div><div style='font-weight:700;font-size:15px'>"+who+"</div><div style='font-size:11px;color:#4a4a6a;margin-top:3px'>"+period+"</div></div><span class='bdg "+bdgClass+"'>"+label+"</span></div>"+
+      "<div class='orow'><span style='font-size:13px;color:#6a6a8a'>Recebido no período</span><span style='font-weight:700'>"+fmt(gross)+"</span></div>"+
+      "<div class='orow'><span style='font-size:13px;color:#6a6a8a'>🙏 Dízimo (10%)</span><span class='red' style='font-weight:700'>"+fmt(gross*TITHE)+"</span></div>"+
+      "<div class='orow'><span style='font-size:13px;color:#6a6a8a'>✨ Primícias (÷30)</span><span class='violet' style='font-weight:700'>"+fmt(gross*PRIM)+"</span></div>"+
+      "<div class='orow'><span style='font-size:13px;color:#6a6a8a'>💰 Para investir</span><span class='green' style='font-weight:700'>"+fmt(netInvest)+"</span></div>"+
+      "<div class='otot'><span style='font-size:14px;font-weight:600'>Total a entregar</span><span style='font-size:22px;font-weight:800;color:#fbbf24'>"+fmt(gross*(TITHE+PRIM))+"</span></div>"+empty;
+  }
+
+  document.getElementById("herOcard").innerHTML=makeOcard(
+    "🛒 Ela — TikTok Shop",
+    lWed.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})+" → "+nWed.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"}),
+    "bdg-g","Qua → Ter",herWRecv,herWNet);
+  document.getElementById("hisOcard").innerHTML=makeOcard(
+    "📱 Eu — TikTok / YouTube",
+    l15.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})+" → "+n15.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"}),
+    "bdg-b","Dia 15 → 14",hisMG,hisMNet);
+
+  // Histórico
+  var hl=document.getElementById("histList");
+  if(!entries.length){
+    hl.innerHTML="<div class='empty'><div style='font-size:40px;margin-bottom:12px'>📭</div><div style='font-size:14px'>Nenhum dia registrado ainda</div></div>";
+    return;
+  }
+  var reversed=[...entries].reverse();
+  var rows=reversed.map(function(e, i){
+    var realIdx=entries.length-1-i;
+    var lbl=fromDS(e.date).toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"});
+    var hp=isHerPay(e.date)?" 💰":"", mp=isHisPay(e.date)?" 💰":"";
+    var delBtn="<button class='dbtn' onclick='_del("+realIdx+")'>✕</button>";
+    if(e.type==="aporte"){
+      return "<div class='hrow'><div style='display:flex;justify-content:space-between;align-items:flex-start'>"+
+        "<div style='flex:1'><div style='font-weight:700;font-size:14px;margin-bottom:2px'>"+lbl+"</div>"+
+        "<div class='hrow-line'>💸 Aporte manual</div></div>"+
+        "<div style='display:flex;align-items:center;gap:8px;margin-left:10px'>"+
+        "<div style='text-align:right'><div class='green' style='font-weight:800;font-size:15px'>+"+fmt(e.totalNet)+"</div>"+
+        "<div style='font-size:10px;color:#4a4a6a'>investimento</div></div>"+
+        delBtn+"</div></div></div>";
+    }
+    var salesLine=(e.herSales>0)?"<div class='hrow-line'>📊 Vendas: "+fmt(e.herSales)+" (acompanhamento)</div>":"";
+    var recvLine=(e.herGross>0)?"<div class='hrow-line'>🛒 Recebido: "+fmt(e.herGross)+" → <span class='red'>-"+fmt(e.herTithe)+"</span> <span class='violet'>-"+fmt(e.herPrimicias)+"</span> <span class='amber'>-"+fmt(e.herReinvest)+"</span> = <span class='green'>"+fmt(e.herNet)+"</span></div>":"";
+    var hisLine=(e.hisGross>0)?"<div class='hrow-line'>📱 "+fmt(e.hisGross)+" → <span class='red'>-"+fmt(e.hisTithe)+"</span> <span class='violet'>-"+fmt(e.hisPrimicias)+"</span> <span class='sky'>-"+fmt(e.hisAI)+"</span> = <span class='green'>"+fmt(e.hisNet)+"</span></div>":"";
+    return "<div class='hrow'><div style='display:flex;justify-content:space-between;align-items:flex-start'>"+
+      "<div style='flex:1'><div style='font-weight:700;font-size:14px;margin-bottom:2px'>"+lbl+hp+mp+"</div>"+
+      salesLine+recvLine+hisLine+"</div>"+
+      "<div style='display:flex;align-items:center;gap:8px;margin-left:10px'>"+
+      "<div style='text-align:right'><div class='green' style='font-weight:800;font-size:15px'>+"+fmt(e.totalNet)+"</div>"+
+      "<div style='font-size:10px;color:#4a4a6a'>ao projeto</div></div>"+
+      delBtn+"</div></div></div>";
+  });
+  hl.innerHTML=rows.join("");
+
+  // Resumo
+  var tDiz=0,tPrim=0,tReinv=0,tAI=0,tAporte=0,tSales=0;
+  entries.forEach(function(e){
+    if(e.type==="aporte"){ tAporte+=e.aporteVal||0; return; }
+    tDiz+=e.herTithe+e.hisTithe;
+    tPrim+=e.herPrimicias+e.hisPrimicias;
+    tReinv+=e.herReinvest||0;
+    tAI+=e.hisAI||0;
+    tSales+=e.herSales||0;
+  });
+  var sumData=[
+    {l:"🎯 Projeto",v:acc,c:"green"},
+    {l:"🙏 Dízimos",v:tDiz,c:"red"},
+    {l:"✨ Primícias",v:tPrim,c:"violet"},
+    {l:"🔁 Reinvestimento (ela)",v:tReinv,c:"amber"},
+    {l:"🤖 Plataformas IA (eu)",v:tAI,c:"sky"},
+    {l:"💸 Aportes manuais",v:tAporte,c:"green"},
+    {l:"📊 Vendas (acompanhamento)",v:tSales,c:""}
+  ];
+  document.getElementById("sumList").innerHTML=sumData.map(function(x){
+    return "<div class='sum-row'><span style='font-size:14px'>"+x.l+"</span><span class='"+(x.c||"")+"' style='font-weight:700;color:"+(x.c?"":"#6a6a8a")+"'>"+fmt(x.v)+"</span></div>";
+  }).join("");
+
+  var normalEntries=entries.filter(function(e){ return e.type!=="aporte"; });
+  document.getElementById("daysSg").innerHTML=
+    "<div class='sb'><div class='sv' style='color:#6060a0'>"+dE+"</div><div class='sl'>Passados</div></div>"+
+    "<div class='sb'><div class='sv green'>"+normalEntries.length+"</div><div class='sl'>Registrados</div></div>"+
+    "<div class='sb'><div class='sv red'>"+(dE-normalEntries.length)+"</div><div class='sl'>Perdidos</div></div>";
+
+  if(normalEntries.length>=2){
+    var avg=acc/normalEntries.length;
+    var dn=rem>0?Math.ceil(rem/avg):0;
+    var ok=dn<=dR;
+    document.getElementById("projSection").innerHTML="<div class='stit'>Projeção</div><div class='card'>"+
+      [{l:"Média diária",v:fmt(avg)},{l:"Dias p/ bater meta",v:rem>0?dn+"d":"✅"},{l:"Situação",v:ok?"✅ No caminho":"⚠️ Acelerar",c:ok?"green":"red"}]
+      .map(function(x){ return "<div class='proj-row'><span style='font-size:13px;color:#5a5a7a'>"+x.l+"</span><span style='font-weight:700' class='"+(x.c||"")+"'>"+x.v+"</span></div>"; }).join("")+"</div>";
+  } else {
+    document.getElementById("projSection").innerHTML="";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  var di=document.getElementById("dateInput");
+  di.value=toDS(new Date());
+  di.min=toDS(P_START); di.max=toDS(P_END);
+  di.addEventListener("change", updatePreview);
+  doLoad();
+});
+</script>
+</body>
+</html>
